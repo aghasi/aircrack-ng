@@ -1575,37 +1575,14 @@ int main( int argc, char *argv[] )
 
                 opt.crypt = CRYPT_WEP;
 
-                i = 0;
+		i=strlen(optarg);
+		strncpy(opt.wepkey,optarg,64);
                 s = optarg;
 
                 buf[0] = s[0];
                 buf[1] = s[1];
                 buf[2] = '\0';
 
-                while( sscanf( buf, "%x", &n ) == 1 )
-                {
-                    if( n < 0 || n > 255 )
-                    {
-                        printf( "Invalid WEP key.\n" );
-			    		printf("\"%s --help\" for help.\n", argv[0]);
-                        return( 1 );
-                    }
-
-                    opt.wepkey[i++] = n;
-
-                    if( i >= 64 ) break;
-
-                    s += 2;
-
-                    if( s[0] == ':' || s[0] == '-' )
-                        s++;
-
-                    if( s[0] == '\0' || s[1] == '\0' )
-                        break;
-
-                    buf[0] = s[0];
-                    buf[1] = s[1];
-                }
 
                 if( i != 5 && i != 13 && i != 16 && i != 29 && i != 61 )
                 {
